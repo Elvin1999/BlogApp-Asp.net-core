@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blog.WebUI.Abstraction;
 using Blog.WebUI.Concrete.EfCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,8 +26,11 @@ namespace Blog.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BlogContext>
-            (options => options.UseSqlServer(Microsoft.Extensions.Configuration.ConfigurationExtensions.GetConnectionString(configuration, "DefaultConnection")));
-            //services.AddTransient<IProductRepository, EfProductRepository>();
+            (options => options.UseSqlServer
+            (Microsoft.Extensions.Configuration.ConfigurationExtensions
+            .GetConnectionString(configuration, "DefaultConnection")));
+            services.AddTransient<ICategoryRepository, EfCategoryRepository>();
+            services.AddTransient<IBlogRepository, EfBlogRepository>();
             services.AddMvc();
         }
 
@@ -46,6 +50,7 @@ namespace Blog.WebUI
                     template: "{controller=Home}/{action=Index}/{id?}"
                     );
             });
+            SeedData.Seed(app);
         }
     }
 }
