@@ -51,6 +51,12 @@
 
     <div class="container mt-3">
 
+        @if(TempData["message"]!=null)
+        {
+            <div class="alert alert-success">
+                @TempData["message"]
+            </div>
+        }
         @RenderBody()
     </div>
 

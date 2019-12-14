@@ -1,5 +1,6 @@
 ﻿using Blog.WebUI.Abstraction;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,12 @@ namespace Blog.WebUI.Controllers
 {
     public class BlogController:Controller
     {
-        private IBlogRepository repository;
-
-        public BlogController(IBlogRepository repository)
+        private IBlogRepository _blogRepository;
+        private ICategoryRepository _categoryRepository;
+        public BlogController(IBlogRepository _blog,ICategoryRepository category)
         {
-            this.repository = repository;
+            _blogRepository = _blog;
+            _categoryRepository = category;
         }
         public IActionResult Index()
         {
@@ -21,7 +23,53 @@ namespace Blog.WebUI.Controllers
         }
         public IActionResult List()
         {
-            return View(repository.GetAll());
+            return View(_blogRepository.GetAll());
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewBag.Categories = new SelectList(_categoryRepository.GetAll(),"CategoryId","Name");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Entities.Blog blog)
+        {
+            blog.Date = DateTime.Now;
+            blog.IsApproved = true;
+            if (ModelState.IsValid)
+            {
+                _blogRepository.AddBlog(blog);
+                return RedirectToAction("List");
+            }
+            return View(blog);
+        }
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            ViewBag.Categories = new SelectList(_categoryRepository.GetAll(), "CategoryId", "Name");
+            return View(_blogRepository.GetById(id));
+        }
+        [HttpPost]
+        public IActionResult Details(Entities.Blog blog)
+        {
+            if (ModelState.IsValid)
+            {
+                _blogRepository.UpdateBlog(blog);
+                TempData["message"] = $" {blog.Title} was updated . . . ";
+                return RedirectToAction("List");
+            }
+            return View(blog);
+        }
+        public IActionResult Delete(int id)
+        {
+            return View(_blogRepository.GetById(id));
+        }
+        [HttpPost,ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _blogRepository.DeleteBlog(id);
+            return RedirectToAction("List");
         }
     }
 }

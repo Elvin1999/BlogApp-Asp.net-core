@@ -1,0 +1,43 @@
+﻿@model Blog
+@{
+    ViewData["Title"] = "Details";
+}
+
+    <div class="container">
+
+        <h1>Edit</h1>
+        <br />
+
+
+        <form asp-controller="Blog" asp-action="Details" method="post">
+            <input type="hidden" asp-for="BlogId" />
+            <div class="form-group">
+                <label asp-for="Title">Title</label>
+                <input asp-for="Title" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Description">Description</label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="Body">Body</label>
+                <textarea asp-for="Body" class="form-control"></textarea>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Image">Image</label>
+                <textarea asp-for="Image" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CategoryId">CategoryId</label>
+                <select class="form-group" asp-for="CategoryId" asp-items="ViewBag.Categories">
+                    <option disabled>Select Category</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+

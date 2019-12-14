@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Blog.WebUI.Entities
         public string Title { get; set; }
         public string Body { get; set; }
         public string Image { get; set; }
+        [BindNever]
         public DateTime Date { get; set; }
         public bool IsApproved { get; set; }
         public int CategoryId { get; set; }
