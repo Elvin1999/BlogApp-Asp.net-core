@@ -16,6 +16,7 @@ namespace Blog.WebUI.Entities
         [BindNever]
         public DateTime Date { get; set; }
         public bool IsApproved { get; set; }
+        public bool IsHome { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
     }

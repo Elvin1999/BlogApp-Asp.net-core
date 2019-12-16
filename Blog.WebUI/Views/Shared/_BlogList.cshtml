@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Blog>
 @foreach (var item in Model)
 {
-    <div class="card mt-2">
+    <div class="card mb-2">
         <img class="card-img-top" src="~/images/@item.Image" />
         <div class="card-header">
             @item.Title
@@ -9,7 +9,9 @@
         <div class="card-body">
             <h5 class="card-title">@item.Title</h5>
             <p class="card-text">@item.Description</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <a asp-controller="Blog" asp-action="Details"
+               asp-route-id="@item.BlogId"
+               class="btn btn-primary">Go Edit Blog</a>
         </div>
     </div>
 }

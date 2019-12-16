@@ -18,7 +18,7 @@ namespace Blog.WebUI.Controllers
 
         public IActionResult Index()
         {
-            return View(blogRepository.GetAll());
+            return View(blogRepository.GetAll().Where(i=>i.IsApproved==true && i.IsHome==true));
         }
         public IActionResult Details()
         {

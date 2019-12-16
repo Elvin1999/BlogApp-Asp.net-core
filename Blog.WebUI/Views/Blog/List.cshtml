@@ -17,6 +17,7 @@
                             <th>Title</th>
                             <th>Date</th>
                             <th>Is Approved</th>
+                            <th>Is From Home</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -26,20 +27,32 @@
                         <tr>
                             <td>@item.BlogId</td>
                             <td>
-                                <img style="border-radius:50%;" src="~/images/@item.Image" width="200" height="200"/>
+                                <img style="border-radius:50%;" src="~/images/@item.Image" width="200" height="200" />
                             </td>
                             <td>@item.Title</td>
                             <td>@item.Date</td>
                             <td>
-                            
-                            @if (item.IsApproved)
-                            {
-                                <i style="color:lawngreen;font-size:25px;" class="fa fa-check" aria-hidden="true"></i>
-                            }
-                            else
-                            {
-                                <i style="color:orangered;font-size:25px;" class="fa fa-times" aria-hidden="true"></i>
-                            }
+
+                                @if (item.IsApproved)
+                                {
+                                    <i style="color:lawngreen;font-size:25px;" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:orangered;font-size:25px;" class="fa fa-times" aria-hidden="true"></i>
+                                }
+
+                            </td>
+                            <td>
+
+                                @if (item.IsHome)
+                                {
+                                    <i style="color:lawngreen;font-size:25px;" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:orangered;font-size:25px;" class="fa fa-times" aria-hidden="true"></i>
+                                }
 
                             </td>
                             <td>
