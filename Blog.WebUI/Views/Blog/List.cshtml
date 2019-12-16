@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Blog>
 @{
     ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="container mt-3">
     <h2>Blog List</h2>
@@ -27,7 +28,7 @@
                         <tr>
                             <td>@item.BlogId</td>
                             <td>
-                                <img style="border-radius:50%;" src="~/images/@item.Image" width="200" height="200" />
+                                <img style="border-radius:50%;" src="~/images/@item.Image"  width="200" height="200" />
                             </td>
                             <td>@item.Title</td>
                             <td>@item.Date</td>

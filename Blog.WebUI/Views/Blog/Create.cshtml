@@ -1,14 +1,13 @@
 ﻿@model Blog
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container">
 
     <h1>Create</h1>
     <br />
-
-
     <form asp-controller="Blog" asp-action="Create" method="post">
 
         <div class="form-group">

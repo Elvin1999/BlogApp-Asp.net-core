@@ -1,0 +1,17 @@
+﻿@model Blog
+@{
+    ViewData["Title"] = "ShowMore";
+}
+
+<div class="card mb-2">
+    <img class="card-img-top" style="border-radius:10%;width:500px;height:500px;" src="~/images/@Model.Image" />
+    <div class="card-header">
+        @Model.Title
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <p class="card-text">@Model.Description</p>
+        <p class="card-text">@Model.Body</p>
+    </div>
+</div>
+

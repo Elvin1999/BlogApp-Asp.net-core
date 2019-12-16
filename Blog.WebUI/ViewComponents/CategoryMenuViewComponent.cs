@@ -15,9 +15,9 @@ namespace Blog.WebUI.ViewComponents
         {
             _repo = repo;
         }
-
         public IViewComponentResult Invoke()
         {
+            ViewBag.SelectedCategory = RouteData?.Values["id"];
             return View(_repo.GetAll());
         }
     }

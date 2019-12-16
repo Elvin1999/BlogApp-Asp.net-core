@@ -4,7 +4,8 @@
     @foreach (var item in Model)
     {
 
-        <a href="#" class="list-group-item active mt-1">
+        <a asp-controller="Blog" asp-action="Index" asp-route-id="@item.CategoryId" class="list-group-item mt-1
+           @(ViewBag.SelectedCategory==item.CategoryId.ToString()?"active":"")">
             @item.Name
         </a>
     

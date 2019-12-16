@@ -16,9 +16,14 @@ namespace Blog.WebUI.Controllers
             _blogRepository = _blog;
             _categoryRepository = category;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
-            return View(_blogRepository.GetAll().Where(i=>i.IsApproved).OrderByDescending(i=>i.Date));
+            var query = _blogRepository.GetAll().Where(i => i.IsApproved);
+            if (id != null)
+            {
+                query = query.Where(i => i.CategoryId == id);
+            }
+            return View(query.OrderByDescending(i=>i.Date));
         }
         public IActionResult List()
         {
@@ -69,6 +74,12 @@ namespace Blog.WebUI.Controllers
         {
             _blogRepository.DeleteBlog(id);
             return RedirectToAction("List");
+        }
+        [HttpGet]
+        public IActionResult ShowMore(int id)
+        {
+
+            return View(_blogRepository.GetById(id));
         }
     }
 }
