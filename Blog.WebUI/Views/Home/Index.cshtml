@@ -9,20 +9,7 @@
            @await Component.InvokeAsync("CategoryMenu")
         </div>
         <div class="col-md-9">
-            @foreach(var item in Model)
-            {
-            <div class="card mt-2">
-                <img class="card-img-top" src="~/images/@item.Image" />
-                <div class="card-header">
-                    @item.Title
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">@item.Title</h5>
-                    <p class="card-text">@item.Description</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            }
+           @Html.Partial("_BlogList",Model)
         </div>
     </div>
 </div>

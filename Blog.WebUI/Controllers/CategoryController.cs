@@ -39,6 +39,32 @@ namespace Blog.WebUI.Controllers
             }
             return View(category);
         }
-
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            return View(repository.GetById(id));
+        }
+        [HttpPost]
+        public IActionResult Details(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.UpdateCategory(category);
+                TempData["message"] = $" {category.Name} was updated . . . ";
+                return RedirectToAction("List");
+            }
+            return View(category);
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return View(repository.GetById(id));
+        }
+        [HttpPost,ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            repository.DeleteCategory(id);
+            return RedirectToAction("List");
+        }
     }
 }

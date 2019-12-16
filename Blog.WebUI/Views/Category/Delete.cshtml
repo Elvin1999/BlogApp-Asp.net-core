@@ -1,0 +1,16 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Delete";
+}
+<h1>
+    Do you want to delete
+    <b>
+
+        @Model.Name
+    </b> category ?
+</h1>
+
+<form asp-controller="Category" asp-action="Delete" method="post">
+    <input type="hidden" asp-for="CategoryId" />
+    <button type="submit" class="btn btn-primary">Delete</button>
+</form>
