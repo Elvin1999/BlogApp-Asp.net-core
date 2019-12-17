@@ -4,14 +4,16 @@ using Blog.WebUI.Concrete.EfCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Blog.WebUI.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    partial class BlogContextModelSnapshot : ModelSnapshot
+    [Migration("20191217162133_AddColumnSlider2")]
+    partial class AddColumnSlider2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,8 +40,6 @@ namespace Blog.WebUI.Migrations
                     b.Property<bool>("IsApproved");
 
                     b.Property<bool>("IsHome");
-
-                    b.Property<bool>("IsSlider");
 
                     b.Property<string>("Title");
 
