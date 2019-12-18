@@ -1,22 +1,25 @@
 ﻿using Blog.WebUI.Abstraction;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.FileProviders;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 namespace Blog.WebUI.Controllers
 {
-    public class BlogController:Controller
+    public class BlogController : Controller
     {
         private IBlogRepository _blogRepository;
         private ICategoryRepository _categoryRepository;
-        public BlogController(IBlogRepository _blog,ICategoryRepository category)
+        public BlogController(IBlogRepository _blog, ICategoryRepository category)
         {
             _blogRepository = _blog;
             _categoryRepository = category;
         }
-        public IActionResult Index(int? id,string q)
+        public IActionResult Index(int? id, string q)
         {
             var query = _blogRepository.GetAll().Where(i => i.IsApproved);
             if (id != null)
@@ -27,7 +30,7 @@ namespace Blog.WebUI.Controllers
             {
                 query = query.Where(i => i.Title.Contains(q) || i.Description.Contains(q) || i.Body.Contains(q));
             }
-            return View(query.OrderByDescending(i=>i.Date));
+            return View(query.OrderByDescending(i => i.Date));
         }
         public IActionResult List()
         {
@@ -36,7 +39,7 @@ namespace Blog.WebUI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Categories = new SelectList(_categoryRepository.GetAll(),"CategoryId","Name");
+            ViewBag.Categories = new SelectList(_categoryRepository.GetAll(), "CategoryId", "Name");
             return View();
         }
 
@@ -59,10 +62,20 @@ namespace Blog.WebUI.Controllers
             return View(_blogRepository.GetById(id));
         }
         [HttpPost]
-        public IActionResult Details(Entities.Blog blog)
+        public async Task<IActionResult> Details(Entities.Blog blog, IFormFile file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", file.FileName);
+                    using (var s = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(s);
+                    }
+                    blog.Image = file.FileName;
+                }
+
                 _blogRepository.UpdateBlog(blog);
                 TempData["message"] = $" {blog.Title} was updated . . . ";
                 return RedirectToAction("List");
@@ -73,7 +86,7 @@ namespace Blog.WebUI.Controllers
         {
             return View(_blogRepository.GetById(id));
         }
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
             _blogRepository.DeleteBlog(id);
